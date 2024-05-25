@@ -1,19 +1,12 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, createTheme, ThemeProvider } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginValidationSchema } from '../validations/FormValidations';
+import axios from '../config/Axios';
+import { useNavigate } from 'react-router-dom';
+import { Zoom, toast } from 'react-toastify';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -25,20 +18,36 @@ const initialValues = {
 }
 
 export default function Login() {
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     console.log({
-    //         email: data.get('email'),
-    //         password: data.get('password'),
-    //     });
-    // };
+
+    const navigate = useNavigate()
+
+    const toastStyle = {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+    }
 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
         validationSchema: loginValidationSchema,
-        onSubmit: (value) => {
-            console.log(value)
+        onSubmit: async (value) => {
+            try {
+                const response = await axios.post('/api/users/login', value)
+                localStorage.setItem("token", response.data.token)
+                navigate('/')
+            } catch (err) {
+                if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
+                    toast.error(err.response.data.errors, toastStyle)
+                } else {
+                    toast.error('Please fill-up all the details', toastStyle)
+                }
+            }
         }
     })
 
