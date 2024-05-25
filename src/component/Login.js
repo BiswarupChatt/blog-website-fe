@@ -12,20 +12,35 @@ import Container from '@mui/material/Container';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { loginValidationSchema } from '../validations/FormValidations';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+const initialValues = {
+    email: "",
+    password: ""
+}
+
+export default function Login() {
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const data = new FormData(event.currentTarget);
+    //     console.log({
+    //         email: data.get('email'),
+    //         password: data.get('password'),
+    //     });
+    // };
+
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+        initialValues: initialValues,
+        validationSchema: loginValidationSchema,
+        onSubmit: (value) => {
+            console.log(value)
+        }
+    })
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -54,6 +69,11 @@ export default function SignIn() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.email && !!errors.email}
+                            helperText={(touched && errors.email)}
                         />
                         <TextField
                             margin="normal"
@@ -64,6 +84,11 @@ export default function SignIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.password && !!errors.email}
+                            helperText={(touched && errors.password)}
                         />
                         <Button
                             type="submit"

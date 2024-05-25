@@ -39,7 +39,7 @@ export default function Register() {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
         validationSchema: registerValidationSchema,
-        onSubmit: async (values,) => {
+        onSubmit: async (values) => {
             try {
                 const response = await axios.post('/api/users/register', values)
                 console.log(response.data)
