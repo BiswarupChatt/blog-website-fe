@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginValidationSchema } from '../validations/FormValidations';
 import axios from '../config/Axios';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Zoom, toast } from 'react-toastify';
 
@@ -12,14 +13,16 @@ import { Zoom, toast } from 'react-toastify';
 
 const defaultTheme = createTheme();
 
-const initialValues = {
-    email: "",
-    password: ""
-}
-
 export default function Login() {
 
     const navigate = useNavigate()
+
+    const { handleLogin, user } = useAuth()
+
+    const initialValues = {
+        email: "",
+        password: ""
+    }
 
     const toastStyle = {
         position: "top-center",
@@ -40,7 +43,15 @@ export default function Login() {
             try {
                 const response = await axios.post('/api/users/login', value)
                 localStorage.setItem("token", response.data.token)
+
+                const userResponse = await axios.get('/api/users/profile', {
+                    headers: {
+                        Authorization: localStorage.getItem('token')
+                    }
+                })
+                handleLogin(userResponse.data)
                 navigate('/')
+
             } catch (err) {
                 if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
                     toast.error(err.response.data.errors, toastStyle)
@@ -50,6 +61,7 @@ export default function Login() {
             }
         }
     })
+
 
     return (
         <ThemeProvider theme={defaultTheme}>

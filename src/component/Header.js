@@ -5,13 +5,16 @@ import Toolbar from '@mui/material/Toolbar';
 import { AppBar } from '@mui/material';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import PersonIcon from '@mui/icons-material/Person';
+import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
+
+    const { user, handleLogout } = useAuth()
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -22,21 +25,26 @@ export default function Header() {
         setAnchorEl(null);
     };
 
+    const handleLogOut = () => {
+        localStorage.removeItem('token')
+        handleLogout()
+    }
+
     return (
         <React.Fragment>
             <AppBar position="sticky" color="default" sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 16px' }} >
-                    <Button size="small">Subscribe</Button>
+                    <Button size="small"> Subscribe</Button>
                     <div>
                         <Link to='/' style={{ textDecoration: 'none', color: 'inherit', flex: 1 }}>
-                            <Typography component="h2" variant="h5" color="inherit" noWrap sx={{ flex: 1, textAlign: 'center'}}>
+                            <Typography component="h2" variant="h5" color="inherit" noWrap sx={{ flex: 1, textAlign: 'center' }}>
                                 TechTales 🚀
                             </Typography>
                         </Link>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Button variant="outlined" size="small" href='/register' sx={{ marginRight: 1 }}>
-                            Sign up
+                        <Button variant="outlined" size="small" href='/login' sx={{ marginRight: 1 }}>
+                            Sign In
                         </Button>
                         <IconButton
                             id="basic-button"
@@ -45,7 +53,7 @@ export default function Header() {
                             aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
                         >
-                            <PersonIcon />
+                            <MenuIcon />
                         </IconButton>
                         <Menu
                             id="basic-menu"
@@ -55,12 +63,24 @@ export default function Header() {
                             MenuListProps={{
                                 'aria-labelledby': 'basic-button',
                             }}
-                        >
-                            <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            </Link>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
-                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        >{!user ? (
+                            <>
+                                <Link to='/login' style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <MenuItem onClick={handleClose} href='/login'>Login</MenuItem>
+                                </Link>
+                                <Link to='/register' style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <MenuItem onClick={handleClose}>Register</MenuItem>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <MenuItem onClick={handleClose}>My Account</MenuItem>
+                                </Link>
+                                <MenuItem onClick={handleClose}>My Post</MenuItem>
+                                <MenuItem onClick={() => { handleClose(); handleLogOut() }}>Logout</MenuItem>
+                            </>
+                        )}
                         </Menu>
                     </div>
                 </Toolbar>

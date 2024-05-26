@@ -10,6 +10,7 @@ export default function App() {
   return (
     <>
       <Header />
+      
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/register' element={<Register />} />
