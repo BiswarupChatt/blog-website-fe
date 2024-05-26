@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { loginValidationSchema } from '../validations/FormValidations';
 import axios from '../config/Axios';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Zoom, toast } from 'react-toastify';
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -16,8 +16,10 @@ const defaultTheme = createTheme();
 export default function Login() {
 
     const navigate = useNavigate()
+    const location = useLocation()
+    const redirect = location.state?.from?.pathname || '/'
 
-    const { handleLogin, user } = useAuth()
+    const { handleLogin} = useAuth()
 
     const initialValues = {
         email: "",
@@ -50,7 +52,7 @@ export default function Login() {
                     }
                 })
                 handleLogin(userResponse.data)
-                navigate('/')
+                navigate(redirect, { replace: true })
 
             } catch (err) {
                 if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
