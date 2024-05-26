@@ -104,11 +104,11 @@ export default function Login() {
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="current-password"
+                            autoComplete="password"
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={touched.password && !!errors.email}
+                            error={touched.password && !!errors.password}
                             helperText={(touched && errors.password)}
                         />
                         <Button

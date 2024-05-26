@@ -11,10 +11,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
 
     const { user, handleLogout } = useAuth()
+
+    const navigate = useNavigate()
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -28,6 +31,7 @@ export default function Header() {
     const handleLogOut = () => {
         localStorage.removeItem('token')
         handleLogout()
+        navigate('/')
     }
 
     return (
@@ -74,11 +78,13 @@ export default function Header() {
                             </>
                         ) : (
                             <>
-                                <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <Link to='/my-account' style={{ textDecoration: 'none', color: 'inherit' }}>
                                     <MenuItem onClick={handleClose}>My Account</MenuItem>
                                 </Link>
-                                <MenuItem onClick={handleClose}>My Post</MenuItem>
-                                <MenuItem onClick={() => { handleClose(); handleLogOut() }}>Logout</MenuItem>
+                                <Link to='/my-post' style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <MenuItem onClick={handleClose}>My Post</MenuItem>
+                                </Link>
+                                <MenuItem onClick={() => { handleLogOut(); handleClose() }}>Logout</MenuItem>
                             </>
                         )}
                         </Menu>
