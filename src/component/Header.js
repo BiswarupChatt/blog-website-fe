@@ -46,7 +46,7 @@ export default function Header() {
                         </Link>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Button variant="outlined" size="small" href='/login' sx={{ marginRight: 1 }}>
+                        <Button variant="outlined" size="small" component={Link} to='/login' sx={{ marginRight: 1 }}>
                             Sign In
                         </Button>
                         <IconButton
@@ -68,22 +68,14 @@ export default function Header() {
                             }}
                         >{!user ? (
                             <>
-                                <Link to='/login' style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <MenuItem onClick={handleClose} href='/login'>Login</MenuItem>
-                                </Link>
-                                <Link to='/register' style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <MenuItem onClick={handleClose}>Register</MenuItem>
-                                </Link>
+                                <MenuItem component={Link} to='/login' onClick={handleClose}>Login</MenuItem>
+                                <MenuItem component={Link} to='/register' onClick={handleClose}>Register</MenuItem>
                             </>
                         ) : (
                             <>
-                                <Link to='/my-account' style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <MenuItem onClick={handleClose}>My Account</MenuItem>
-                                </Link>
-                                <Link to='/my-post' style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <MenuItem onClick={handleClose}>My Post</MenuItem>
-                                </Link>
-                                <MenuItem onClick={() => { handleLogOut(); handleClose() }}>Logout</MenuItem>
+                                <MenuItem component={Link} to='/my-account' onClick={handleClose}>My Account</MenuItem>
+                                <MenuItem component={Link} to='/my-post' onClick={handleClose}>My Post</MenuItem>
+                                <MenuItem onClick={() => { handleLogOut(); handleClose(); }}>Logout</MenuItem>
                             </>
                         )}
                         </Menu>

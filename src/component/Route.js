@@ -34,10 +34,10 @@ export function RedirectedToMain({ children }) {
     }
 
     const { user } = useAuth()
-    const location = useLocation
+    const location = useLocation()
+    const redirect = location.state?.from?.pathname || '/my-account'
 
     if (user) {
-        const redirect = location.state?.from?.pathname || '/'
         toast.error("You're already logged in", toastStyle)
         return <Navigate to={redirect} replace />
     } else {

@@ -7,6 +7,7 @@ import Login from './component/Login';
 import Footer from './component/Footer';
 import MyPost from './component/MyPost';
 import MyAccount from './component/MyAccount';
+import SinglePost from './component/SinglePost';
 import { PrivateRoute, RedirectedToMain } from './component/Route';
 import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
@@ -36,10 +37,10 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/register' element={
-        <RedirectedToMain>
-          <Register />
-        </RedirectedToMain>
-      } />
+          <RedirectedToMain>
+            <Register />
+          </RedirectedToMain>
+        } />
         <Route path='/login' element={
           <RedirectedToMain>
             <Login />
@@ -54,6 +55,7 @@ export default function App() {
           <PrivateRoute>
             <MyAccount />
           </PrivateRoute>} />
+        <Route path='/api/posts/:id' element={<SinglePost />}></Route>
       </Routes>
 
       <Footer />

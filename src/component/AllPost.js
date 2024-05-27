@@ -11,6 +11,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { toast } from 'react-toastify';
 import axios from '../config/Axios';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 
 const defaultTheme = createTheme();
@@ -41,7 +42,7 @@ export default function AllPost() {
                         <Grid container spacing={5} >
                             {posts.map((ele) => (
                                 <Grid item xs={12} key={ele._id}>
-                                    <CardActionArea component="a" href="#">
+                                    <CardActionArea component={Link} to={`/api/posts/${ele._id}`}>
                                         <Card sx={{ display: 'flex' }}>
                                         <CardMedia
                                                 component="img"
