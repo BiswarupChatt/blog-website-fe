@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import axios from '../config/Axios';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import HTMLReactParser from 'html-react-parser/lib/index';
 
 
 const defaultTheme = createTheme();
@@ -30,6 +31,10 @@ export default function AllPost() {
             }
         })()
     }, [])
+
+    const previewContent = (content) => {
+        return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....');
+    }
 
     return (
         <>
@@ -57,7 +62,7 @@ export default function AllPost() {
                                                     {moment(ele.createdAt).format('Do-MMMM-YYYY')}
                                                 </Typography>
                                                 <Typography variant="subtitle1" paragraph>
-                                                    {ele.content}
+                                                    {previewContent(ele.content)}
                                                 </Typography>
                                                 <Typography variant="subtitle1" color="primary">
                                                     Continue reading...

@@ -34,7 +34,10 @@ export default function MyPost() {
             }
         })()
     }, [])
-    console.log(posts)
+
+    const previewContent = (content) => {
+        return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....');
+    }
 
     return (
         <>
@@ -63,7 +66,7 @@ export default function MyPost() {
                                                     {moment(ele.createdAt).format('Do-MMMM-YYYY')}
                                                 </Typography>
                                                 <Typography variant="subtitle1" paragraph>
-                                                    {ele.content}
+                                                {previewContent(ele.content)}
                                                 </Typography>
                                                 <Typography variant="subtitle1" color="primary">
                                                     Continue reading...
@@ -75,7 +78,7 @@ export default function MyPost() {
                             ))) : (
                                 <>
                                 <span>You han't Create any post write your first post</span> 
-                                
+
                                 </>
                             )}
                         </Grid>
