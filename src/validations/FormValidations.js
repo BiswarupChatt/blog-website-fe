@@ -36,4 +36,14 @@ const userUpdateValidation = Yup.object({
             .email('Enter valid email address')
 })
 
-export { registerValidationSchema, loginValidationSchema, userUpdateValidation }
+
+const CreatePostValidation = Yup.object({
+      title: Yup.string()
+            .required('Title is required')
+            .min(10, 'Title must be 10 character long'),
+      content: Yup.string()
+      .required('Content is required')
+      .min(50, 'Content must be 50 Character Long' )
+})
+
+export { registerValidationSchema, loginValidationSchema, userUpdateValidation, CreatePostValidation }

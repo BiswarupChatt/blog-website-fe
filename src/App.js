@@ -18,15 +18,21 @@ export default function App() {
   const { handleLogin } = useAuth()
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    const token = localStorage.getItem('token')
+
+    if(token){
       (async () => {
-        const userResponse = await axios.get('/api/users/profile', {
-          headers: {
-            Authorization: localStorage.getItem('token')
-          }
-        })
-        handleLogin(userResponse.data)
-      })()
+        try{
+          const userResponse = await axios.get('/api/users/profile', {
+            headers: {
+              Authorization: localStorage.getItem('token')
+            }
+          })
+          handleLogin(userResponse.data)
+        }catch(err){
+          
+        }
+      })();
     }
   }, [])
 

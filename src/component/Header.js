@@ -67,16 +67,16 @@ export default function Header() {
                                 'aria-labelledby': 'basic-button',
                             }}
                         >{!user ? (
-                            <>
+                            <div>
                                 <MenuItem component={Link} to='/login' onClick={handleClose}>Login</MenuItem>
                                 <MenuItem component={Link} to='/register' onClick={handleClose}>Register</MenuItem>
-                            </>
+                            </div>
                         ) : (
-                            <>
+                            <div>
                                 <MenuItem component={Link} to='/my-account' onClick={handleClose}>My Account</MenuItem>
                                 <MenuItem component={Link} to='/my-post' onClick={handleClose}>My Post</MenuItem>
                                 <MenuItem onClick={() => { handleLogOut(); handleClose(); }}>Logout</MenuItem>
-                            </>
+                            </div>
                         )}
                         </Menu>
                     </div>

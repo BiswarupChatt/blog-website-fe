@@ -2,15 +2,18 @@ import React from "react";
 import { useFormik } from "formik";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
+import { CreatePostValidation } from '../validations/FormValidations'
 
 export default function () {
 
+    const initialValues = {
+        title: "",
+        content: ""
+    }
 
     const formik = useFormik({
-        initialValues: {
-            title: "",
-            content: ""
-        },
+        initialValues: initialValues,
+        validationSchema: CreatePostValidation,
         onSubmit: (value) => {
             console.log(value)
         }
@@ -30,10 +33,14 @@ export default function () {
                         onChange={formik.handleChange}
                         style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px', border: '1px solid #ccc' }}
                     />
+                    {formik.touched.title && formik.errors.title ? (
+                        <div style={{ color: 'red', marginTop: '5px' }}>{formik.errors.title}</div>
+                    ) : null}
                 </div>
                 <div style={{ marginBottom: '20px' }}>
                     <label htmlFor="content" style={{ display: 'block', marginBottom: '8px' }}>Content</label>
                     <ReactQuill
+                        name='content'
                         value={formik.values.content}
                         onChange={(content) => formik.setFieldValue('content', content)}
                         modules={{
@@ -55,11 +62,14 @@ export default function () {
                         ]}
                         style={{ height: '300px' }}
                     />
+                    {formik.touched.title && formik.errors.title ? (
+                        <div style={{ color: 'red', marginTop: '5px' }}>{formik.errors.title}</div>
+                    ) : null}
                 </div>
                 <button
                     type="submit"
                     style={{
-                        margin:'30px 0',
+                        margin: '50px 0 0 0',
                         width: '100%',
                         padding: '10px',
                         backgroundColor: '#007BFF',
