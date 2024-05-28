@@ -8,6 +8,7 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from '../config/Axios';
 import moment from 'moment';
@@ -77,8 +78,10 @@ export default function MyPost() {
                                 </Grid>
                             ))) : (
                                 <>
-                                <span>You han't Create any post write your first post</span> 
-
+                                <CardContent>
+                                <Typography component="h2" variant="h5">You han't Create any post write your first post</Typography> 
+                                <Button variant="outlined" size="small" component={Link} to='/create-post'>Create first Post</Button>
+                                </CardContent>
                                 </>
                             )}
                         </Grid>

@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import { CreatePostValidation } from '../validations/FormValidations'
 import axios from "../config/Axios";
+import { toast, Zoom } from "react-toastify";
 
 export default function () {
 
@@ -27,19 +28,39 @@ export default function () {
         'list', 'bullet', 'indent',
     ]
 
+    const toastStyle = {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+    }
+
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: CreatePostValidation,
         onSubmit: async (value) => {
             // console.log(value)
-           try{
-                const response = await axios.post('/api/posts', value, {headers: {
-                    Authorization: localStorage.getItem('token')
-                }})
+            try {
+                const response = await axios.post('/api/posts', value, {
+                    headers: {
+                        Authorization: localStorage.getItem('token')
+                    }
+                })
                 console.log(response.data)
-           }catch(err){
-
-           }
+            } catch (err) {
+                if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
+                    err.response.data.errors.forEach((error) => {
+                        toast.error(error.msg, toastStyle)
+                    })
+                } else {
+                    toast.error('Please fill-up all the details', toastStyle);
+                }
+            }
         }
     })
 
@@ -71,10 +92,10 @@ export default function () {
                             toolbar: toolbar,
                         }}
                         formats={formats}
-                        style={{ height: '300px' , marginBottom: '60px'}}
+                        style={{ height: '300px', marginBottom: '60px' }}
                     />
                     {formik.touched.content && formik.errors.content ? (
-                        <div style={{ color: 'red', marginTop: '50px' }}>{formik.errors.content}</div>
+                        <div style={{ color: 'red', marginTop: '40px' }}>{formik.errors.content}</div>
                     ) : null}
                 </div>
                 {/* <div style={{ marginTop: '50px' }}>
