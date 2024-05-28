@@ -7,6 +7,7 @@ import Login from './component/Login';
 import Footer from './component/Footer';
 import MyPost from './component/MyPost';
 import MyAccount from './component/MyAccount';
+import CreatePost from './component/CreatePost';
 import SinglePost from './component/SinglePost';
 import { PrivateRoute, RedirectedToMain } from './component/Route';
 import { useAuth } from './context/AuthContext';
@@ -41,27 +42,39 @@ export default function App() {
       <Header />
 
       <Routes>
+        
         <Route path='/' element={<Home />} />
+
         <Route path='/register' element={
           <RedirectedToMain>
             <Register />
           </RedirectedToMain>
         } />
+
         <Route path='/login' element={
           <RedirectedToMain>
             <Login />
           </RedirectedToMain>
         } />
+
         <Route path='/my-post' element={
           <PrivateRoute>
             <MyPost />
           </PrivateRoute>
         } />
+
         <Route path='/my-account' element={
           <PrivateRoute>
             <MyAccount />
           </PrivateRoute>} />
-        <Route path='/api/posts/:id' element={<SinglePost />}></Route>
+
+        <Route path='/api/posts/:id' element={<SinglePost />}/>
+
+        <Route path='/create-post' element={
+        <PrivateRoute>
+          <CreatePost/>
+        </PrivateRoute>}/>
+
       </Routes>
 
       <Footer />

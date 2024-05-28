@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import { CreatePostValidation } from '../validations/FormValidations'
+import axios from "../config/Axios";
 
 export default function () {
 
@@ -11,19 +12,42 @@ export default function () {
         content: ""
     }
 
+    const toolbar = [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ size: [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' },
+        { 'indent': '-1' }, { 'indent': '+1' }],
+        ['clean']
+    ]
+
+    const formats = [
+        'header', 'font', 'size',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+    ]
+
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: CreatePostValidation,
-        onSubmit: (value) => {
-            console.log(value)
+        onSubmit: async (value) => {
+            // console.log(value)
+           try{
+                const response = await axios.post('/api/posts', value, {headers: {
+                    Authorization: localStorage.getItem('token')
+                }})
+                console.log(response.data)
+           }catch(err){
+
+           }
         }
     })
 
     return (
         <div style={{ maxWidth: '800px', margin: '30px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
             <h1 style={{ textAlign: 'center' }}>Create Post</h1>
-            <form onSubmit={formik.handleSubmit}>
-                <div style={{ marginBottom: '20px' }}>
+            <form onSubmit={formik.handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+                <div >
                     <label htmlFor="title" style={{ display: 'block', marginBottom: '8px' }}>Title</label>
                     <input
                         type="text"
@@ -37,39 +61,32 @@ export default function () {
                         <div style={{ color: 'red', marginTop: '5px' }}>{formik.errors.title}</div>
                     ) : null}
                 </div>
-                <div style={{ marginBottom: '20px' }}>
+                <div style={{}}>
                     <label htmlFor="content" style={{ display: 'block', marginBottom: '8px' }}>Content</label>
                     <ReactQuill
                         name='content'
                         value={formik.values.content}
                         onChange={(content) => formik.setFieldValue('content', content)}
                         modules={{
-                            toolbar: [
-                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                [{ size: [] }],
-                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                { 'indent': '-1' }, { 'indent': '+1' }],
-                                ['link', 'image', 'video'],
-                                ['clean']
-                            ],
+                            toolbar: toolbar,
                         }}
-                        formats={[
-                            'header', 'font', 'size',
-                            'bold', 'italic', 'underline', 'strike', 'blockquote',
-                            'list', 'bullet', 'indent',
-                            'link', 'image', 'video'
-                        ]}
-                        style={{ height: '300px' }}
+                        formats={formats}
+                        style={{ height: '300px' , marginBottom: '60px'}}
                     />
-                    {formik.touched.title && formik.errors.title ? (
-                        <div style={{ color: 'red', marginTop: '5px' }}>{formik.errors.title}</div>
+                    {formik.touched.content && formik.errors.content ? (
+                        <div style={{ color: 'red', marginTop: '50px' }}>{formik.errors.content}</div>
                     ) : null}
                 </div>
+                {/* <div style={{ marginTop: '50px' }}>
+                    <label htmlFor="fileUpload" >Choose a file:</label>
+                    <input
+                        type="file"
+                        style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px', border: '1px solid #ccc', marginTop: '' }} />
+                </div> */}
                 <button
                     type="submit"
                     style={{
-                        margin: '50px 0 0 0',
+                        // margin: '50px 0 0 0',
                         width: '100%',
                         padding: '10px',
                         backgroundColor: '#007BFF',

@@ -43,7 +43,7 @@ const CreatePostValidation = Yup.object({
             .min(10, 'Title must be 10 character long'),
       content: Yup.string()
       .required('Content is required')
-      .min(50, 'Content must be 50 Character Long' )
+      .min(100, 'Content must be 100 Character Long' )
 })
 
 export { registerValidationSchema, loginValidationSchema, userUpdateValidation, CreatePostValidation }

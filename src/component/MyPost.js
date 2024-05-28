@@ -72,7 +72,12 @@ export default function MyPost() {
                                         </Card>
                                     </CardActionArea>
                                 </Grid>
-                            ))) : ("you don't have any post")}
+                            ))) : (
+                                <>
+                                <span>You han't Create any post write your first post</span> 
+                                
+                                </>
+                            )}
                         </Grid>
                     </main>
                 </Container>

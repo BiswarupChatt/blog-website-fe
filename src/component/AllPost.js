@@ -30,7 +30,6 @@ export default function AllPost() {
             }
         })()
     }, [])
-    console.log(posts)
 
     return (
         <>
