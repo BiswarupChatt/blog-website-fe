@@ -66,7 +66,7 @@ export default function MyPost() {
                                                     <Typography variant="subtitle1" gutterBottom>
                                                         Author - {`${ele.author.firstName} ${ele.author.lastName}`}
                                                     </Typography>
-                                                    <Typography variant="subtitle1" color="text.secondary">
+                                                    <Typography variant="subtitle2" color="text.secondary">
                                                         {moment(ele.createdAt).format('Do-MMMM-YYYY')}
                                                     </Typography>
                                                     <Typography variant="subtitle1" paragraph>

@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { toast } from 'react-toastify';
-import axios from '../config/Axios';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
-import HTMLReactParser from 'html-react-parser/lib/index';
+import moment from 'moment';
+import axios from '../config/Axios';
+import { toast } from 'react-toastify';
 
+import { createTheme, ThemeProvider,CssBaseline, Grid, Container, Typography , Card, CardActionArea, CardContent, CardMedia} from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -58,10 +49,10 @@ export default function AllPost() {
                                                 <Typography component="h2" variant="h5">
                                                     {ele.title}
                                                 </Typography>
-                                                <Typography variant="subtitle1" gutterBottom>
+                                                <Typography variant="subtitle" gutterBottom>
                                                     Author - {`${ele.author.firstName} ${ele.author.lastName}`}
                                                 </Typography>
-                                                <Typography variant="subtitle1" color="text.secondary">
+                                                <Typography variant="subtitle2" color="text.secondary">
                                                     {moment(ele.createdAt).format('Do-MMMM-YYYY')}
                                                 </Typography>
                                                 <Typography variant="subtitle1" paragraph>

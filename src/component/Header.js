@@ -75,6 +75,7 @@ export default function Header() {
                             <div>
                                 <MenuItem component={Link} to='/my-account' onClick={handleClose}>My Account</MenuItem>
                                 <MenuItem component={Link} to='/my-post' onClick={handleClose}>My Post</MenuItem>
+                                <MenuItem component={Link} to='/create-post' onClick={handleClose}>Create Post</MenuItem>
                                 <MenuItem onClick={() => { handleLogOut(); handleClose(); }}>Logout</MenuItem>
                             </div>
                         )}

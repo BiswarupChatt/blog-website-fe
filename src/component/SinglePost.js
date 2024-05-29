@@ -4,6 +4,7 @@ import HTMLReactParser from "html-react-parser/lib/index"
 import axios from "../config/Axios";
 import { Box, Grid, Typography, Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import moment from "moment";
 
 
 export default function SinglePost() {
@@ -54,7 +55,6 @@ export default function SinglePost() {
                     direction="column"
                     padding='30px'
                     sx={{
-                        border: '1px solid black',
                         borderRadius: '30px',
                         boxShadow: '5px 10px 8px #888888',
                         position: 'relative'
@@ -80,6 +80,9 @@ export default function SinglePost() {
                     </Typography>
                     <Typography variant="subtitle1" gutterBottom>
                         Author - {`${post.author.firstName} ${post.author.lastName}`}
+                    </Typography>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        {moment(post.createdAt).format('Do-MMMM-YYYY')}
                     </Typography>
                     <Divider sx={{ width: '100%' }} />
                     {HTMLReactParser(post.content)}
