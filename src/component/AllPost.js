@@ -24,9 +24,9 @@ export default function AllPost() {
     useEffect(() => {
         (async () => {
             const response = await axios.get('/api/posts')
-            if(response){
-                 setPosts(response.data)
-            }else{
+            if (response) {
+                setPosts(response.data)
+            } else {
                 toast.error('Unable to Fetch The post')
             }
         })()
@@ -48,7 +48,7 @@ export default function AllPost() {
                                 <Grid item xs={12} key={ele._id}>
                                     <CardActionArea component={Link} to={`/api/posts/${ele._id}`}>
                                         <Card sx={{ display: 'flex' }}>
-                                        <CardMedia
+                                            <CardMedia
                                                 component="img"
                                                 sx={{ width: 300, display: { xs: 'none', sm: 'block' } }}
                                                 image={ele.bannerImage}
@@ -57,6 +57,9 @@ export default function AllPost() {
                                             <CardContent sx={{ flex: 1 }}>
                                                 <Typography component="h2" variant="h5">
                                                     {ele.title}
+                                                </Typography>
+                                                <Typography variant="subtitle1" gutterBottom>
+                                                    Author - {`${ele.author.firstName} ${ele.author.lastName}`}
                                                 </Typography>
                                                 <Typography variant="subtitle1" color="text.secondary">
                                                     {moment(ele.createdAt).format('Do-MMMM-YYYY')}

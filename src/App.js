@@ -9,6 +9,7 @@ import MyPost from './component/MyPost';
 import MyAccount from './component/MyAccount';
 import CreatePost from './component/CreatePost';
 import SinglePost from './component/SinglePost';
+import PostDetails from './component/PostDetails';
 import { PrivateRoute, RedirectedToMain } from './component/Route';
 import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
@@ -19,19 +20,20 @@ export default function App() {
   const { handleLogin } = useAuth()
 
   useEffect(() => {
+
     const token = localStorage.getItem('token')
 
-    if(token){
+    if (token) {
       (async () => {
-        try{
+        try {
           const userResponse = await axios.get('/api/users/profile', {
             headers: {
               Authorization: localStorage.getItem('token')
             }
           })
           handleLogin(userResponse.data)
-        }catch(err){
-          
+        } catch (err) {
+
         }
       })();
     }
@@ -42,7 +44,7 @@ export default function App() {
       <Header />
 
       <Routes>
-        
+
         <Route path='/' element={<Home />} />
 
         <Route path='/register' element={
@@ -68,12 +70,12 @@ export default function App() {
             <MyAccount />
           </PrivateRoute>} />
 
-        <Route path='/api/posts/:id' element={<SinglePost />}/>
+        <Route path='/api/posts/:id' element={<PostDetails />} />
 
         <Route path='/create-post' element={
-        <PrivateRoute>
-          <CreatePost/>
-        </PrivateRoute>}/>
+          <PrivateRoute>
+            <CreatePost />
+          </PrivateRoute>} />
 
       </Routes>
 
