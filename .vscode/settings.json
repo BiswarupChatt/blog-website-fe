@@ -3,6 +3,7 @@
         "bgcolor",
         "formik",
         "haspopup",
+        "labelledby",
         "toastify"
     ]
 }

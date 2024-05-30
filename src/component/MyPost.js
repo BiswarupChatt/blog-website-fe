@@ -82,7 +82,7 @@ export default function MyPost() {
                                 ))) : (
                                     <>
                                         <CardContent>
-                                            <Typography component="h2" variant="h5">You han't Create any post write your first post</Typography>
+                                            <Typography component="h2" variant="h5">You haven't Create any post write your first post</Typography>
                                             <Button variant="outlined" size="small" component={Link} to='/create-post'>Create first Post</Button>
                                         </CardContent>
                                     </>

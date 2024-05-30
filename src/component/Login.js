@@ -55,7 +55,7 @@ export default function Login() {
                 navigate(redirect, { replace: true })
 
             } catch (err) {
-                if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
+                if (err.response.data.errors && err.response.data.errors.length > 0) {
                     toast.error(err.response.data.errors, toastStyle)
                 } else {
                     toast.error('Please fill-up all the details', toastStyle)

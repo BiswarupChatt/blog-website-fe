@@ -8,8 +8,8 @@ import Footer from './component/Footer';
 import MyPost from './component/MyPost';
 import MyAccount from './component/MyAccount';
 import CreatePost from './component/CreatePost';
-// import SinglePost from './component/SinglePost';
-import PostDetails from './component/PostDetails';
+import SinglePost from './component/SinglePost';
+import EditPost from './component/EditPost';
 import { PrivateRoute, RedirectedToMain } from './component/Route';
 import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
@@ -70,11 +70,16 @@ export default function App() {
             <MyAccount />
           </PrivateRoute>} />
 
-        <Route path='/api/posts/:id' element={<PostDetails />} />
+        <Route path='/api/posts/:id' element={<SinglePost />} />
 
         <Route path='/create-post' element={
           <PrivateRoute>
             <CreatePost />
+          </PrivateRoute>} />
+        
+        <Route path='/api/posts/:id/update' element={
+          <PrivateRoute>
+            <EditPost />
           </PrivateRoute>} />
 
       </Routes>

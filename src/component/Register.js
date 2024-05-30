@@ -42,10 +42,10 @@ export default function Register() {
         onSubmit: async (values) => {
             try {
                 const response = await axios.post('/api/users/register', values)
-                console.log(response.data)
+                // console.log(response.data)
                 navigate('/login')
             } catch (err) {
-                if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
+                if (err.response.data.errors && err.response.data.errors.length > 0) {
                     err.response.data.errors.forEach((error) => {
                         toast.error(error.msg, toastStyle)
                     })

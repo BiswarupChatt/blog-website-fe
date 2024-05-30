@@ -25,7 +25,7 @@ export default function AllPost() {
     }, [])
 
     const previewContent = (content) => {
-        return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....');
+        return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....')
     }
     return (
         <>

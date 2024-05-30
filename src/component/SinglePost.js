@@ -5,12 +5,17 @@ import axios from "../config/Axios";
 import { Box, Grid, Typography, Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import moment from "moment";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 
 export default function SinglePost() {
     const { id } = useParams()
     const [post, setPost] = useState(null)
     const [anchorEl, setAnchorEl] = useState(null);
+    const {user} = useAuth()
+
+    // console.log("User Details",user)
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -30,7 +35,8 @@ export default function SinglePost() {
             }
         })();
     }, [])
-    console.log(post)
+
+    // console.log('Post details',post)
 
     if (!post) {
         return <Typography>Loading...</Typography>
@@ -86,8 +92,7 @@ export default function SinglePost() {
                     </Typography>
                     <Divider sx={{ width: '100%' }} />
                     {HTMLReactParser(post.content)}
-
-                    <IconButton
+                    {user && post.author._id === user._id && (<IconButton
                         variant="contained"
                         sx={{
                             position: 'absolute',
@@ -98,13 +103,14 @@ export default function SinglePost() {
 
                     >
                         <MoreVertIcon />
-                    </IconButton>
+                    </IconButton>) }
+                    
                     <Menu
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
+                        <MenuItem component={Link} to={`/api/posts/${id}/update`} onClick={handleMenuClose}>Edit</MenuItem>
                         <MenuItem onClick={handleMenuClose}>Delete</MenuItem>
                     </Menu>
                 </Grid>
