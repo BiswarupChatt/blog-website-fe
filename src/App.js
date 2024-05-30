@@ -8,7 +8,7 @@ import Footer from './component/Footer';
 import MyPost from './component/MyPost';
 import MyAccount from './component/MyAccount';
 import CreatePost from './component/CreatePost';
-import SinglePost from './component/SinglePost';
+// import SinglePost from './component/SinglePost';
 import PostDetails from './component/PostDetails';
 import { PrivateRoute, RedirectedToMain } from './component/Route';
 import { useAuth } from './context/AuthContext';

@@ -50,12 +50,12 @@ export default function MyPost() {
                         <Grid container spacing={5} >
                             {posts.length > 0 ?
                                 (posts.map((ele) => (
-                                    <Grid item xs={12} key={ele._id}>
+                                    <Grid item xs={12} md={4} key={ele._id}>
                                         <CardActionArea component={Link} to={`/api/posts/${ele._id}`}>
-                                            <Card sx={{ display: 'flex' }}>
+                                            <Card sx={{ display: 'flex', flexDirection: 'column' }}>
                                                 <CardMedia
                                                     component="img"
-                                                    sx={{ width: 300, display: { xs: 'none', sm: 'block' } }}
+                                                    sx={{ width: '100%', display: { sm: 'block' } }}
                                                     image={ele.bannerImage}
                                                     alt={ele.imageLabel}
                                                 />

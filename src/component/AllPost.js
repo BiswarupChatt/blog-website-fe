@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from '../config/Axios';
+import _ from 'lodash'
 import { toast } from 'react-toastify';
 
 import { createTheme, ThemeProvider,CssBaseline, Grid, Container, Typography , Card, CardActionArea, CardContent, CardMedia} from '@mui/material';
@@ -26,7 +27,6 @@ export default function AllPost() {
     const previewContent = (content) => {
         return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....');
     }
-
     return (
         <>
             {/* <h2>Home Working</h2> */}
@@ -35,13 +35,13 @@ export default function AllPost() {
                 <Container maxWidth="lg" sx={{ mt: 1 }}>
                     <main>
                         <Grid container spacing={5} >
-                            {posts.map((ele) => (
-                                <Grid item xs={12} key={ele._id}>
+                            {_.shuffle(posts.map((ele) => (
+                                <Grid item xs={12} md={4} key={ele._id}>
                                     <CardActionArea component={Link} to={`/api/posts/${ele._id}`}>
-                                        <Card sx={{ display: 'flex' }}>
+                                        <Card sx={{ display: 'flex' , flexDirection:'column' }}>
                                             <CardMedia
                                                 component="img"
-                                                sx={{ width: 300, display: { xs: 'none', sm: 'block' } }}
+                                                sx={{ width: '100%', display: { sm: 'block' } }}
                                                 image={ele.bannerImage}
                                                 alt={ele.imageLabel}
                                             />
@@ -65,7 +65,7 @@ export default function AllPost() {
                                         </Card>
                                     </CardActionArea>
                                 </Grid>
-                            ))}
+                            )))}
                         </Grid>
                     </main>
                 </Container>

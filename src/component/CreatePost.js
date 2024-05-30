@@ -5,11 +5,13 @@ import { useFormik } from "formik";
 import ReactQuill from "react-quill";
 import { CreatePostValidation } from '../validations/FormValidations'
 import 'react-quill/dist/quill.snow.css'
+import { useNavigate } from "react-router-dom";
 
 export default function () {
 
     const [bannerImage, setBannerImage] = useState(null)
-    const [postId, setPostId] = useState(null)
+
+    const navigate = useNavigate()
 
     const handleFileChange = (e) => {
         setBannerImage(e.currentTarget.files[0]);
@@ -78,7 +80,7 @@ export default function () {
                     }
                 })
                 console.log('post created successfully', response.data)
-                setPostId(response.data._id)
+                // setPostId(response.data._id)
 
                 if (bannerImage) {
                     await updateBannerImage(response.data._id)
@@ -86,7 +88,7 @@ export default function () {
 
                 toast.success('Post created successfully!', toastStyle)
                 
-                formik.resetForm()
+                navigate(`/api/posts/${response.data._id}`)
             } catch (err) {
                 if (err.response && err.response.data && err.response.data.errors && err.response.data.errors.length > 0) {
                     err.response.data.errors.forEach((error) => {

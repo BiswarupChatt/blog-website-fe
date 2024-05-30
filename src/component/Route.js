@@ -1,3 +1,4 @@
+import { Margin } from "@mui/icons-material";
 import { useAuth } from "../context/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
@@ -7,7 +8,7 @@ export function PrivateRoute({ children }) {
     const location = useLocation()
 
     if (!user && localStorage.getItem('token')) {
-        return <p>Loading...</p>
+        return <p style={{margin: '50px'}}>Loading...</p>
     }
 
     if (!user) {
