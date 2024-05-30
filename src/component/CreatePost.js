@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { toast, Zoom } from "react-toastify";
 import axios from "../config/Axios";
-import { useFormik } from "formik";
 import ReactQuill from "react-quill";
-import { CreatePostValidation } from '../validations/FormValidations'
 import 'react-quill/dist/quill.snow.css'
 import { useNavigate } from "react-router-dom";
 
