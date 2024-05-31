@@ -57,7 +57,7 @@ export default function SinglePost() {
                 return toast.error("You're Not Authorized to Delete Post", toastStyle)
             }
         } catch (err) {
-             return toast.error("Something Went Wrong, Unable to Delete Post", toastStyle)
+            return toast.error("Something Went Wrong, Unable to Delete Post", toastStyle)
         }
         navigate('/my-post')
     }
@@ -128,71 +128,83 @@ export default function SinglePost() {
                     </Typography>
                     <Divider sx={{ width: '100%' }} />
                     {HTMLReactParser(post.content)}
-                    {user && post.author._id === user._id && (<IconButton
-                        variant="contained"
-                        sx={{
-                            position: 'absolute',
-                            top: '5px',
-                            right: '5px',
-                        }}
-                        onClick={handleMenuToggle}
+                    {user && post.author._id === user._id && (
+                        <IconButton
+                            variant="contained"
+                            sx={{
+                                position: 'absolute',
+                                top: '5px',
+                                right: '5px',
+                            }}
+                            onClick={handleMenuToggle}
 
-                    >
-                        <MoreVertIcon />
-                    </IconButton>)}
+                        >
+                            <MoreVertIcon />
+                        </IconButton>
+                    )}
 
                     <Menu
                         anchorEl={menuToggle}
                         open={Boolean(menuToggle)}
                         onClose={handleMenuToggle}
                     >
-                        <MenuItem component={Link} to={`/api/posts/${id}/update`} onClick={handleMenuToggle}>Edit</MenuItem>
-                        <MenuItem onClick={() => { handleModalToggle(); handleMenuToggle() }}>Delete</MenuItem>
-                    </Menu>
-
-                    <Modal
-                        open={modalToggle}
-                        onClose={handleModalToggle}
-                    >
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)',
-                                width: {
-                                    xs: '60%',
-                                    sm: '50%',
-                                    md: '30%',
-                                    lg: '20%',
-                                },
-                                bgcolor: 'background.paper',
-                                // border: '2px solid #000',
-                                borderRadius: '20px',
-                                boxShadow: 2,
-                                p: 4,
-                            }}
+                        <MenuItem
+                            component={Link}
+                            to={`/api/posts/${id}/update`}
+                            onClick={handleMenuToggle}
                         >
-                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Confirm Delete
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Are you sure you want to delete this post?
-                            </Typography>
-                            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'start' }}>
-                                <Button sx={{ mr: 1 }} variant="contained" color="error" onClick={handleDelete} type="button">
-                                    Delete
-                                </Button>
-                                <Button sx={{ ml: 1 }} variant="contained" onClick={handleModalToggle} type="button">
-                                    Cancel
-                                </Button>
-                            </Box>
-                        </Box>
-                    </Modal>
-
+                            Edit
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => { handleModalToggle(); handleMenuToggle() }}
+                        >
+                            Delete
+                        </MenuItem>
+                    </Menu>
                 </Grid>
             </Box>
-            <Comment/>
+
+            <Comment />
+
+            <Modal
+                open={modalToggle}
+                onClose={handleModalToggle}
+            >
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: {
+                            xs: '60%',
+                            sm: '50%',
+                            md: '30%',
+                            lg: '20%',
+                        },
+                        bgcolor: 'background.paper',
+                        // border: '2px solid #000',
+                        borderRadius: '20px',
+                        boxShadow: 2,
+                        p: 4,
+                    }}
+                >
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Confirm Delete
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Are you sure you want to delete this post?
+                    </Typography>
+                    <Box sx={{ mt: 3, display: 'flex', justifyContent: 'start' }}>
+                        <Button sx={{ mr: 1 }} variant="contained" color="error" onClick={handleDelete} type="button">
+                            Delete
+                        </Button>
+                        <Button sx={{ ml: 1 }} variant="contained" onClick={handleModalToggle} type="button">
+                            Cancel
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
         </>
     )
 }

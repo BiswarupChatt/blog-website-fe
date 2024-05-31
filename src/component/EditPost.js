@@ -114,7 +114,7 @@ export default function CreatePost() {
             } else {
                 setClientErrors(errors)
             }
-        }else{
+        } else {
             toast.error("You're not authorize to edit this post", toastStyle)
             navigate(`/api/posts/${id}`)
         }
