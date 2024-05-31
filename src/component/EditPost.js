@@ -95,7 +95,7 @@ export default function CreatePost() {
         }
 
         validations()
-        if (user._id === post.author._id) {
+        if (user._id.toString() === post.author._id.toString()) {
             if (Object.keys(errors).length === 0) {
                 try {
                     const response = await axios.put(`/api/posts/${id}`, formData, {

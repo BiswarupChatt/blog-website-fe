@@ -8,6 +8,7 @@ import moment from "moment";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
+import Comment from "./Comment";
 
 
 export default function SinglePost() {
@@ -45,7 +46,7 @@ export default function SinglePost() {
     const handleDelete = async () => {
         console.log('delete')
         try {
-            if (user._id === post.author._id) {
+            if (user._id.toString() === post.author._id.toString()) {
                 await axios.delete(`/api/posts/${id}`, {
                     headers: {
                         Authorization: localStorage.getItem('token')
@@ -191,6 +192,7 @@ export default function SinglePost() {
 
                 </Grid>
             </Box>
+            <Comment/>
         </>
     )
 }
