@@ -11,13 +11,16 @@ import moment from 'moment';
 
 export default function Comment() {
 
+    // new comment state
     const [form, setForm] = useState('')
     const [newComment, setNewComment] = useState('')
     const [allComment, setAllComment] = useState([])
 
-    const [editForm, setEditForm] = useState('')
+    // edit comment state
+    const [selectedComment, setSelectedComment] = useState('')
     const [commentId, setCommentId] = useState(null)
 
+    // all toggle button 
     const [menuToggle, setMenuToggle] = useState(null)
     const [editModalToggle, setEditModalToggle] = useState(false)
     const [deleteModalToggle, setDeleteModalToggle] = useState(false)
@@ -37,9 +40,8 @@ export default function Comment() {
         transition: Zoom,
     }
 
-    const handleMenuToggle = (e, commentId, commentContent) => {
+    const handleMenuToggle = (e, commentId) => {
         setCommentId(commentId)
-        setEditForm(commentContent)
         if (menuToggle) {
             setMenuToggle(null)
         } else {
@@ -47,7 +49,7 @@ export default function Comment() {
         }
 
     }
-    console.log(commentId, editForm)
+    console.log(commentId)
 
     const handleEditModalToggle = () => {
         setEditModalToggle(!editModalToggle)
@@ -83,11 +85,24 @@ export default function Comment() {
                 console.log(response.data)
                 setAllComment(response.data)
             } catch (err) {
-                console.log(err)
+                console.log("error", err)
             }
         })();
     }, [newComment])
 
+    useEffect(() => {
+        if (commentId) {
+            (async () => {
+                try {
+                    const response = await axios.get(`/api/posts/${id}/comments/${commentId}`)
+                    setSelectedComment(response.data)
+                    console.log("response", response.data)
+                } catch (err) {
+                    return null
+                }
+            })()
+        }
+    }, [commentId])
 
     return (
         <>
@@ -224,8 +239,8 @@ export default function Comment() {
                         id='editComment'
                         name='editComment'
                         label="Edit your thoughts"
-                        value={editForm}
-                        onChange={(e) => setEditForm(e.target.value)}
+                        value={selectedComment.content}
+                        onChange={(e) => setSelectedComment(e.target.value)}
                     >
 
                     </TextField>
