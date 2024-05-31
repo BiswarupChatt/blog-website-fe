@@ -122,7 +122,7 @@ export default function CreatePost() {
     }
     return (
         <div style={{ maxWidth: '800px', margin: '30px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
-            <h1 style={{ textAlign: 'center' }}>Create Post</h1>
+            <h1 style={{ textAlign: 'center' }}>Update Post</h1>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
 
@@ -177,7 +177,7 @@ export default function CreatePost() {
                         margin: '30px 0 0 0', width: '100%', padding: '10px', backgroundColor: '#007BFF', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer'
                     }}
                 >
-                    Submit
+                    Update
                 </button>
 
             </form>

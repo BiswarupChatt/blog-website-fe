@@ -32,7 +32,7 @@ export default function AllPost() {
             {/* <h2>Home Working</h2> */}
             <ThemeProvider theme={defaultTheme}>
                 <CssBaseline />
-                <Container maxWidth="lg" sx={{ mt: 1 }}>
+                <Container maxWidth="lg" sx={{ mt: '30px' }}>
                     <main>
                         <Grid container spacing={5} >
                             {_.shuffle(posts.map((ele) => (
