@@ -12,8 +12,8 @@ import moment from 'moment';
 export default function Comment() {
 
     // new comment state
-    const [form, setForm] = useState('')
-    const [newComment, setNewComment] = useState('')
+    const [comment, setComment] = useState('')
+    const [refreshComment, setRefreshComment] = useState('')
     const [allComment, setAllComment] = useState([])
 
     // edit comment state
@@ -40,6 +40,7 @@ export default function Comment() {
         transition: Zoom,
     }
 
+    // for toggling menu icon
     const handleMenuToggle = (e) => {
         if (menuToggle) {
             setMenuToggle(null)
@@ -49,33 +50,29 @@ export default function Comment() {
 
     }
 
-    const handleSetCommentId = (e)=>{
-        setCommentId(e)
-    }
-
-    console.log("comment id",commentId)
-
+    // for toggling edit modal
     const handleEditModalToggle = () => {
         setEditModalToggle(!editModalToggle)
     }
 
+    // fro toggling delete modal
     const handleDeleteModalToggle = () => {
         setDeleteModalToggle(!deleteModalToggle)
     }
 
+    // for controlling comment creation
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const response = await axios.post(`/api/posts/${id}/comments`, { content: form }, {
+            await axios.post(`/api/posts/${id}/comments`, { content: comment }, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
             })
-            setNewComment(response.data)
-            console.log(newComment)
             toast.success('Commented Successfully', toastStyle)
-            setForm('')
+            setRefreshComment((ele)=>(!ele))
+            setComment('')
         } catch (err) {
             console.log(err)
             toast.error('Unable to Comment, Try Again Later', toastStyle)
@@ -83,35 +80,58 @@ export default function Comment() {
 
     }
 
+
+    // for controlling edit comment modal
     const handleEditSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const response = await axios.put(`/api/posts/${id}/comments/${commentId}`, {content: selectedComment}, {
+           await axios.put(`/api/posts/${id}/comments/${commentId}`, { content: selectedComment }, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
             })
-            setNewComment(response.data)
-            console.log('edited')
+            setRefreshComment((ele)=>(!ele))
             handleEditModalToggle()
+            toast.success("Your Comment Updated Successfully", toastStyle)
         } catch (err) {
-            console.log(err)
+            toast.error("Unable to Update Comment, Try Again Later", toastStyle)
         }
     }
 
+    //for controlling delete comment modal
+    const handleDeleteSubmit = async (e) => {
+        e.preventDefault()
+        try {
+           await axios.delete(`/api/posts/${id}/comments/${commentId}`, {
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                }
+            })
+            setRefreshComment((ele)=>(!ele))
+            toast.success("Your Comment Deleted Successfully", toastStyle)
+            console.log("Boom guys")
+            handleDeleteModalToggle()
+        } catch (err) {
+           console.log(err)
+           toast.success("Unable to Delete Comment, Try Again Later", toastStyle)
+        }
+    }
+
+    // for fetching all comment by refreshing state
     useEffect(() => {
         (async () => {
             try {
                 const response = await axios.get(`/api/posts/${id}/comments`)
-                console.log(response.data)
                 setAllComment(response.data)
             } catch (err) {
                 console.log("error", err)
             }
         })();
-    }, [newComment])
+    }, [refreshComment])
 
+
+    // for fetching single comment by id
     useEffect(() => {
         if (commentId) {
             (async () => {
@@ -120,12 +140,12 @@ export default function Comment() {
                     setSelectedComment(response.data)
                     console.log("response", response.data)
                 } catch (err) {
-
                     setSelectedComment('')
                 }
             })()
         }
     }, [commentId])
+
 
     return (
         <>
@@ -177,7 +197,7 @@ export default function Comment() {
                                                 top: '5px',
                                                 right: '0px'
                                             }}
-                                            onClick={(e) => { handleMenuToggle(e) ; handleSetCommentId(ele._id) }}
+                                            onClick={(e) => { handleMenuToggle(e); setCommentId(ele._id) }}
                                         >
                                             <MoreVertIcon />
                                         </IconButton>
@@ -217,9 +237,9 @@ export default function Comment() {
                                             fullWidth
                                             id="comment"
                                             name="comment"
-                                            value={form}
+                                            value={comment}
                                             onChange={(e) => {
-                                                setForm(e.target.value)
+                                                setComment(e.target.value)
                                             }}
                                             label="Write your thoughts here"
                                             multiline
@@ -319,7 +339,7 @@ export default function Comment() {
                         Are you sure you want to delete this comment?
                     </Typography>
                     <Box sx={{ mt: 3, display: 'flex', justifyContent: 'start' }}>
-                        <Button sx={{ mr: 1 }} variant="contained" color="error" type="button" onClick={handleDeleteModalToggle}>
+                        <Button sx={{ mr: 1 }} variant="contained" color="error" type="button" onClick={(e) => { handleDeleteSubmit(e) }}>
                             Delete
                         </Button>
                         <Button sx={{ ml: 1 }} variant="contained" type="button" onClick={handleDeleteModalToggle}>
