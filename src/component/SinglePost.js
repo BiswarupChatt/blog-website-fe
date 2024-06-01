@@ -9,6 +9,7 @@ import moment from "moment";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
+import Loader from './Loader'
 
 
 export default function SinglePost() {
@@ -75,7 +76,7 @@ export default function SinglePost() {
 
 
     if (!post) {
-        return <Typography>Loading...</Typography>
+        return <Loader/>
     }
 
     return (
