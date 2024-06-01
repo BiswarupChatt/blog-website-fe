@@ -1,16 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import { AppBar } from '@mui/material';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Button, IconButton, Typography, Menu, MenuItem } from '@mui/material';
+import { Link , useNavigate} from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Header() {
 
@@ -37,7 +29,7 @@ export default function Header() {
         <React.Fragment>
             <AppBar position="sticky" color="default" sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 16px' }} >
-                    <Button size="small"> {user? user.firstName : 'enter name'}</Button>
+                    <Button size="small"> {user ? user.firstName : 'enter name'}</Button>
                     <div>
                         <Link to='/' style={{ textDecoration: 'none', color: 'inherit', flex: 1 }}>
                             <Typography component="h2" variant="h5" color="inherit" noWrap sx={{ flex: 1, textAlign: 'center' }}>

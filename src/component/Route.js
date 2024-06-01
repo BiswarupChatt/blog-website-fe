@@ -1,14 +1,15 @@
-import { Margin } from "@mui/icons-material";
+import * as React from 'react';
+import Loader from './Loader';
+import { toast, Zoom } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
-import { toast, Zoom } from "react-toastify";
 
 export function PrivateRoute({ children }) {
     const { user } = useAuth()
     const location = useLocation()
 
     if (!user && localStorage.getItem('token')) {
-        return <p style={{margin: '50px'}}>Loading...</p>
+        return <p style={{ margin: '50px' }}><Loader/></p>
     }
 
     if (!user) {

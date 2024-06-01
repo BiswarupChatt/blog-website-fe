@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
 import { toast, Zoom } from "react-toastify";
 import axios from "../config/Axios";
-import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
-import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
 

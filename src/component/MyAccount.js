@@ -1,19 +1,11 @@
 import { useState } from "react"
-import { useAuth } from "../context/AuthContext"
-import axios from "../config/Axios";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useFormik } from "formik";
+import axios from "../config/Axios";
 import { toast, Zoom } from "react-toastify";
+import { useAuth } from "../context/AuthContext"
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { userUpdateValidation } from "../validations/FormValidations";
+import { Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, createTheme, ThemeProvider } from '@mui/material';
 
 const theme = createTheme();
 

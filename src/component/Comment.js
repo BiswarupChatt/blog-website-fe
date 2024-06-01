@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Avatar, Typography, TextField, Button, IconButton, MenuItem, Menu, Modal } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import axios from '../config/Axios';
 import { toast, Zoom } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
@@ -71,7 +70,7 @@ export default function Comment() {
                 }
             })
             toast.success('Commented Successfully', toastStyle)
-            setRefreshComment((ele)=>(!ele))
+            setRefreshComment((ele) => (!ele))
             setComment('')
         } catch (err) {
             console.log(err)
@@ -86,12 +85,12 @@ export default function Comment() {
         e.preventDefault()
 
         try {
-           await axios.put(`/api/posts/${id}/comments/${commentId}`, { content: selectedComment }, {
+            await axios.put(`/api/posts/${id}/comments/${commentId}`, { content: selectedComment }, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
             })
-            setRefreshComment((ele)=>(!ele))
+            setRefreshComment((ele) => (!ele))
             handleEditModalToggle()
             toast.success("Your Comment Updated Successfully", toastStyle)
         } catch (err) {
@@ -103,18 +102,18 @@ export default function Comment() {
     const handleDeleteSubmit = async (e) => {
         e.preventDefault()
         try {
-           await axios.delete(`/api/posts/${id}/comments/${commentId}`, {
+            await axios.delete(`/api/posts/${id}/comments/${commentId}`, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
             })
-            setRefreshComment((ele)=>(!ele))
+            setRefreshComment((ele) => (!ele))
             toast.success("Your Comment Deleted Successfully", toastStyle)
             console.log("Boom guys")
             handleDeleteModalToggle()
         } catch (err) {
-           console.log(err)
-           toast.success("Unable to Delete Comment, Try Again Later", toastStyle)
+            console.log(err)
+            toast.success("Unable to Delete Comment, Try Again Later", toastStyle)
         }
     }
 

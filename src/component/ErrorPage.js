@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Container, Typography, Button, Box } from '@mui/material';
 
 export default function ErrorPage() {
 

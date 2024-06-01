@@ -1,14 +1,11 @@
-import 'react-toastify/dist/ReactToastify.css'
 import * as React from 'react';
-import { Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { registerValidationSchema } from '../validations/FormValidations'
 import axios from '../config/Axios'
-import { useNavigate } from 'react-router-dom';
 import { Zoom, toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { registerValidationSchema } from '../validations/FormValidations'
+import { Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, createTheme, ThemeProvider } from '@mui/material';
 
 const defaultTheme = createTheme();
 

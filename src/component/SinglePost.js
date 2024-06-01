@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import Comment from "./Comment";
 import HTMLReactParser from "html-react-parser/lib/index"
 import axios from "../config/Axios";
 import { Box, Grid, Typography, Divider, IconButton, Menu, MenuItem, Modal, Button } from '@mui/material';
@@ -8,7 +9,6 @@ import moment from "moment";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
-import Comment from "./Comment";
 
 
 export default function SinglePost() {

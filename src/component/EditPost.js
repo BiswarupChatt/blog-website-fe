@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { toast, Zoom } from "react-toastify";
-import axios from "../config/Axios";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css'
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import ReactQuill from "react-quill";
+import { toast, Zoom } from "react-toastify";
+import axios from "../config/Axios";
+import 'react-quill/dist/quill.snow.css'
 
 export default function CreatePost() {
 
