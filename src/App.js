@@ -10,6 +10,7 @@ import MyAccount from './component/MyAccount';
 import CreatePost from './component/CreatePost';
 import SinglePost from './component/SinglePost';
 import EditPost from './component/EditPost';
+import ErrorPage from './component/ErrorPage';
 import { PrivateRoute, RedirectedToMain } from './component/Route';
 import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
@@ -81,6 +82,8 @@ export default function App() {
           <PrivateRoute>
             <EditPost />
           </PrivateRoute>} />
+
+          <Route path='*' element={<ErrorPage/>}/>
 
       </Routes>
 
