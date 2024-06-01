@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, IconButton, Typography, Menu, MenuItem } from '@mui/material';
-import { Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -29,18 +29,23 @@ export default function Header() {
         <React.Fragment>
             <AppBar position="sticky" color="default" sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 16px' }} >
-                    <Button size="small"> {user ? user.firstName : 'enter name'}</Button>
+                    <Button size="small" component={Link} to='/my-account'> {user ? (`Hello ${user.firstName}`) : ('Hello User')}</Button>
                     <div>
                         <Link to='/' style={{ textDecoration: 'none', color: 'inherit', flex: 1 }}>
                             <Typography component="h2" variant="h5" color="inherit" noWrap sx={{ flex: 1, textAlign: 'center' }}>
-                                TechTales 🚀
+                                TechTales🚀
                             </Typography>
                         </Link>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Button variant="outlined" size="small" component={Link} to='/login' sx={{ marginRight: 1 }}>
-                            Sign In
-                        </Button>
+                        {user ? (
+                            <>
+                                <Button variant="outlined" size="small" component={Link} to='/my-post' sx={{ marginRight: 1 }}>
+                                    Your Post
+                                </Button>
+                            </>
+                        ) : (null)}
+
                         <IconButton
                             id="basic-button"
                             aria-controls={open ? 'basic-menu' : undefined}
