@@ -18,7 +18,7 @@ export default function Comment() {
 
     // edit comment state
     const [selectedComment, setSelectedComment] = useState('')
-    const [commentId, setCommentId] = useState(null)
+    const [commentId, setCommentId] = useState('')
 
     // all toggle button 
     const [menuToggle, setMenuToggle] = useState(null)
@@ -40,8 +40,7 @@ export default function Comment() {
         transition: Zoom,
     }
 
-    const handleMenuToggle = (e, commentId) => {
-        setCommentId(commentId)
+    const handleMenuToggle = (e) => {
         if (menuToggle) {
             setMenuToggle(null)
         } else {
@@ -49,7 +48,12 @@ export default function Comment() {
         }
 
     }
-    console.log(commentId)
+
+    const handleSetCommentId = (e)=>{
+        setCommentId(e)
+    }
+
+    console.log("comment id",commentId)
 
     const handleEditModalToggle = () => {
         setEditModalToggle(!editModalToggle)
@@ -59,11 +63,11 @@ export default function Comment() {
         setDeleteModalToggle(!deleteModalToggle)
     }
 
-    const handleCommentSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const response = await axios.post(`/api/posts/${id}/comment`, { content: form }, {
+            const response = await axios.post(`/api/posts/${id}/comments`, { content: form }, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
@@ -73,9 +77,27 @@ export default function Comment() {
             toast.success('Commented Successfully', toastStyle)
             setForm('')
         } catch (err) {
+            console.log(err)
             toast.error('Unable to Comment, Try Again Later', toastStyle)
         }
 
+    }
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await axios.put(`/api/posts/${id}/comments/${commentId}`, {content: selectedComment}, {
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                }
+            })
+            setNewComment(response.data)
+            console.log('edited')
+            handleEditModalToggle()
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -98,7 +120,8 @@ export default function Comment() {
                     setSelectedComment(response.data)
                     console.log("response", response.data)
                 } catch (err) {
-                    return null
+
+                    setSelectedComment('')
                 }
             })()
         }
@@ -141,40 +164,48 @@ export default function Comment() {
                                         {ele.content}
                                     </Typography>
                                     <Typography variant="caption" >
-                                        {moment(ele.createdAt).startOf('hour').fromNow()}
+                                        {moment(ele.createdAt).startOf('min').fromNow()}
                                     </Typography>
                                 </Grid>
-                                <IconButton
-                                    variant='contained'
-                                    sx={{
-                                        position: 'absolute',
-                                        top: '5px',
-                                        right: '0px'
-                                    }}
-                                    onClick={(e) => { handleMenuToggle(e, ele._id, ele.content) }}
-                                >
-                                    <MoreVertIcon />
-                                </IconButton>
 
-                                <Menu
-                                    anchorEl={menuToggle}
-                                    open={Boolean(menuToggle)}
-                                    onClose={handleMenuToggle}
-                                >
-                                    <MenuItem onClick={() => {
-                                        handleEditModalToggle(); handleMenuToggle()
-                                    }}>Edit</MenuItem>
-                                    <MenuItem onClick={() => {
-                                        handleDeleteModalToggle(); handleMenuToggle()
-                                    }}>Delete</MenuItem>
-                                </Menu>
+                                {user._id === ele.author._id ? (
+                                    <>
+                                        <IconButton
+                                            variant='contained'
+                                            sx={{
+                                                position: 'absolute',
+                                                top: '5px',
+                                                right: '0px'
+                                            }}
+                                            onClick={(e) => { handleMenuToggle(e) ; handleSetCommentId(ele._id) }}
+                                        >
+                                            <MoreVertIcon />
+                                        </IconButton>
+
+                                        <Menu
+                                            anchorEl={menuToggle}
+                                            open={Boolean(menuToggle)}
+                                            onClose={handleMenuToggle}
+                                        >
+                                            <MenuItem onClick={() => {
+                                                handleEditModalToggle(); handleMenuToggle()
+                                            }}>Edit</MenuItem>
+                                            <MenuItem onClick={() => {
+                                                handleDeleteModalToggle(); handleMenuToggle()
+                                            }}>Delete</MenuItem>
+                                        </Menu>
+                                    </>
+                                ) : (null)}
+
+
+
                             </Grid>
                         </Box>
                     ))}
 
 
                     {user ? (
-                        <form onSubmit={handleCommentSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <Box sx={{ p: 2, border: '3px solid #ddd', borderRadius: '8px', mb: 2 }}>
                                 <Grid spacing={2} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <Grid item>
@@ -232,26 +263,28 @@ export default function Comment() {
                         p: 4,
                     }}
                 >
-                    <TextField
-                        variant='outlined'
-                        fullWidth
-                        multiline
-                        id='editComment'
-                        name='editComment'
-                        label="Edit your thoughts"
-                        value={selectedComment.content}
-                        onChange={(e) => setSelectedComment(e.target.value)}
-                    >
+                    <form onSubmit={handleEditSubmit}>
+                        <TextField
+                            variant='outlined'
+                            fullWidth
+                            multiline
+                            id='editComment'
+                            name='editComment'
+                            label="Edit your thoughts"
+                            value={selectedComment.content}
+                            onChange={(e) => setSelectedComment(e.target.value)}
+                        >
 
-                    </TextField>
-                    <Box sx={{ mt: 1, display: 'flex', justifyContent: 'end' }}>
-                        <Button variant="contained" color='error' type="button" onClick={handleEditModalToggle}>
-                            Cancel
-                        </Button>
-                        <Button sx={{ ml: 1 }} variant="contained" color="success" type="button" onClick={handleEditModalToggle}>
-                            Update
-                        </Button>
-                    </Box>
+                        </TextField>
+                        <Box sx={{ mt: 1, display: 'flex', justifyContent: 'end' }}>
+                            <Button variant="contained" type="button" onClick={handleEditModalToggle}>
+                                Cancel
+                            </Button>
+                            <Button sx={{ ml: 1 }} variant="contained" color="success" type="submit" >
+                                Update
+                            </Button>
+                        </Box>
+                    </form>
                 </Box>
             </Modal>
 
