@@ -72,9 +72,13 @@ export default function MyPost() {
                                     </Grid>
                                 ))) : (
                                     <>
-                                        <CardContent style={{ textAlign: 'center', padding: '20px' }}>
-                                            <Typography component="h2" variant="h5" style={{ marginBottom: '20px' }}>You haven't created any posts yet. Write your first post!</Typography>
-                                            <Button variant="outlined" size="small" component={Link} to='/create-post' style={{ color: '#007BFF', borderColor: '#007BFF' }}>Create First Post</Button>
+                                        <CardContent style={{ display: 'flex', margin: 'auto', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                                            <Typography component="h2" variant="h5">
+                                                You haven't created any posts yet. Write your first post!
+                                            </Typography>
+                                            <Button variant="outlined" size="small" sx={{ marginTop: '30px' }} component={Link} to='/create-post'>
+                                                Create First Post
+                                            </Button>
                                         </CardContent>
                                     </>
                                 )}
