@@ -76,7 +76,7 @@ export default function SinglePost() {
 
 
     if (!post) {
-        return <Loader/>
+        return <Loader />
     }
 
     return (
@@ -129,39 +129,44 @@ export default function SinglePost() {
                     </Typography>
                     <Divider sx={{ width: '100%' }} />
                     {HTMLReactParser(post.content)}
-                    {user && post.author._id === user._id && (
-                        <IconButton
-                            variant="contained"
-                            sx={{
-                                position: 'absolute',
-                                top: '5px',
-                                right: '5px',
-                            }}
-                            onClick={handleMenuToggle}
 
-                        >
-                            <MoreVertIcon />
-                        </IconButton>
+                    {post && post.author && post.author._id && user && user._id && user._id.toString() === post.author._id.toString() && (
+                        <>
+                            <IconButton
+                                variant="contained"
+                                sx={{
+                                    position: 'absolute',
+                                    top: '5px',
+                                    right: '5px',
+                                }}
+                                onClick={handleMenuToggle}
+                            >
+                                <MoreVertIcon />
+                            </IconButton>
+
+                            <Menu
+                                anchorEl={menuToggle}
+                                open={Boolean(menuToggle)}
+                                onClose={handleMenuToggle}
+                            >
+                                <MenuItem
+                                    component={Link}
+                                    to={`/api/posts/${id}/update`}
+                                    onClick={handleMenuToggle}
+                                >
+                                    Edit
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => { handleModalToggle(); handleMenuToggle() }}
+                                >
+                                    Delete
+                                </MenuItem>
+                            </Menu>
+                        </>
+
                     )}
 
-                    <Menu
-                        anchorEl={menuToggle}
-                        open={Boolean(menuToggle)}
-                        onClose={handleMenuToggle}
-                    >
-                        <MenuItem
-                            component={Link}
-                            to={`/api/posts/${id}/update`}
-                            onClick={handleMenuToggle}
-                        >
-                            Edit
-                        </MenuItem>
-                        <MenuItem
-                            onClick={() => { handleModalToggle(); handleMenuToggle() }}
-                        >
-                            Delete
-                        </MenuItem>
-                    </Menu>
+
                 </Grid>
             </Box>
 

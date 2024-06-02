@@ -187,7 +187,7 @@ export default function Comment() {
                                     </Typography>
                                 </Grid>
 
-                                {user._id === ele.author._id ? (
+                                {ele && ele.author && ele.author._id && user && user._id && user._id.toString() === ele.author._id.toString() && (
                                     <>
                                         <IconButton
                                             variant='contained'
@@ -214,7 +214,7 @@ export default function Comment() {
                                             }}>Delete</MenuItem>
                                         </Menu>
                                     </>
-                                ) : (null)}
+                                )}
 
 
 

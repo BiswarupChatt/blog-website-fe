@@ -3,7 +3,7 @@ import moment from 'moment';
 import axios from '../config/Axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import { Grid, Container, createTheme, ThemeProvider, Typography, Card, CardActionArea, CardContent, CardMedia, Button,CssBaseline } from '@mui/material';
+import { Grid, Container, createTheme, ThemeProvider, Typography, Card, CardActionArea, CardContent, CardMedia, Button, CssBaseline } from '@mui/material';
 
 
 const defaultTheme = createTheme();
@@ -72,9 +72,9 @@ export default function MyPost() {
                                     </Grid>
                                 ))) : (
                                     <>
-                                        <CardContent>
-                                            <Typography component="h2" variant="h5">You haven't Create any post write your first post</Typography>
-                                            <Button variant="outlined" size="small" component={Link} to='/create-post'>Create first Post</Button>
+                                        <CardContent style={{ textAlign: 'center', padding: '20px' }}>
+                                            <Typography component="h2" variant="h5" style={{ marginBottom: '20px' }}>You haven't created any posts yet. Write your first post!</Typography>
+                                            <Button variant="outlined" size="small" component={Link} to='/create-post' style={{ color: '#007BFF', borderColor: '#007BFF' }}>Create First Post</Button>
                                         </CardContent>
                                     </>
                                 )}
