@@ -27,6 +27,12 @@ export default function AllPost() {
     const previewContent = (content) => {
         return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....')
     }
+
+    if (!post) {
+        return <Loader/>
+    }
+
+    
     return (
         <>
             {/* <h2>Home Working</h2> */}
