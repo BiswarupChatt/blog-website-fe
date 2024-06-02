@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const handleLogin = (user) => {
         // setTimeout(() => {
             setUser(user)
-        // }, 150000)
+        // }, 1000)
     }
 
     const handleLogout = () => {
