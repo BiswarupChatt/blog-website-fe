@@ -5,6 +5,7 @@ import axios from '../config/Axios';
 import _ from 'lodash'
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import Loader from './Loader';
 
 
 const defaultTheme = createTheme();
@@ -28,7 +29,7 @@ export default function AllPost() {
         return content.replace(/<[^>]*>/g, '').substring(0, 200).concat('', '.....')
     }
 
-    if (!post) {
+    if (!posts) {
         return <Loader/>
     }
 
