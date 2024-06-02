@@ -29,7 +29,7 @@ export default function Header() {
         <React.Fragment>
             <AppBar position="sticky" color="default" sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 16px' }} >
-                    <Button size="small" component={Link} to='/my-account'> {user ? (`Hello ${user.firstName}`) : ('Hello User')}</Button>
+                    <Button size="small" component={Link} to='/my-account' sx={{ display: { xs: 'none', md: 'inline' } }}> {user ? (`Hello ${user.firstName}`) : ('Hello User')}</Button>
                     <div>
                         <Link to='/' style={{ textDecoration: 'none', color: 'inherit', flex: 1 }}>
                             <Typography component="h2" variant="h5" color="inherit" noWrap sx={{ flex: 1, textAlign: 'center' }}>
@@ -40,7 +40,7 @@ export default function Header() {
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {user ? (
                             <>
-                                <Button variant="outlined" size="small" component={Link} to='/my-post' sx={{ marginRight: 1 }}>
+                                <Button variant="outlined" size="small" component={Link} to='/my-post' sx={{ marginRight: 1, display: { xs: 'none', md: 'inline' } }}>
                                     Your Post
                                 </Button>
                             </>
