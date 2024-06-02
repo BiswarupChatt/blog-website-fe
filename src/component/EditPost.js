@@ -27,6 +27,7 @@ export default function CreatePost() {
         (async () => {
             try {
                 const response = await axios.get(`/api/posts/${id}`)
+                console.log("A", response.data)
                 setPost(response.data)
             } catch (err) {
                 console.log(err)
@@ -35,13 +36,16 @@ export default function CreatePost() {
         })();
     }, [])
 
+    console.log("B", post)
+
     useEffect(() => {
         setForm({
-            title: post.title,
+            ...form,
+            title: post? post.title : '',
             content: post.content,
             bannerImage: null
         })
-        console.log(form)
+        console.log('C', form)
     }, [post])
 
     const validations = () => {
