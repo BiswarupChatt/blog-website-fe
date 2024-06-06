@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { Box, Grid, Typography, Avatar, IconButton, Menu, MenuItem, TextField, Button, Modal } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
@@ -255,34 +255,38 @@ export default function Comment() {
 
                     )}
 
-                    <form onSubmit={handleSubmit}>
-                        <Box sx={{ p: 2, border: '3px solid #ddd', borderRadius: '8px', mb: 2 }}>
-                            <Grid spacing={2} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Grid item mr='10px' sx={{ display: { xs: 'none', sm: 'block' } }}>
-                                    <Avatar />
-                                </Grid>
-                                <Grid item xs={10} >
-                                    <TextField
-                                        variant="outlined"
-                                        fullWidth
-                                        id="comment"
-                                        name="comment"
-                                        label="Write your thoughts here"
-                                        multiline
-                                        value={state.comment}
-                                        onChange={(e) => {
-                                            dispatch({ type: 'SET_COMMENT', payload: e.target.value })
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item ml='10px'>
-                                    <Button type='submit' variant="contained" color="primary">
-                                        <SendIcon />
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </form>
+                    {user ? (
+                        <>
+                            <form onSubmit={handleSubmit}>
+                                <Box sx={{ p: 2, border: '3px solid #ddd', borderRadius: '8px', mb: 2 }}>
+                                    <Grid spacing={2} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <Grid item mr='10px' sx={{ display: { xs: 'none', sm: 'block' } }}>
+                                            <Avatar />
+                                        </Grid>
+                                        <Grid item xs={10} >
+                                            <TextField
+                                                variant="outlined"
+                                                fullWidth
+                                                id="comment"
+                                                name="comment"
+                                                label="Write your thoughts here"
+                                                multiline
+                                                value={state.comment}
+                                                onChange={(e) => {
+                                                    dispatch({ type: 'SET_COMMENT', payload: e.target.value })
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item ml='10px'>
+                                            <Button type='submit' variant="contained" color="primary">
+                                                <SendIcon />
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                            </form>
+                        </>
+                    ) : (null)}
                 </Grid>
             </Box>
 
